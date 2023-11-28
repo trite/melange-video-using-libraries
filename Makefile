@@ -1,4 +1,4 @@
-project_name = melange-opam-template
+project_name = melange-video-using-libraries
 
 DUNE = opam exec -- dune
 
