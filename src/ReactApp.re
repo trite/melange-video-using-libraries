@@ -5,14 +5,21 @@ module App = {
   // Melange has been installed correctly for JS bundlers to be able to find it.
   [@react.component]
   let make = () => {
-    let (colors, setColors) = React.useState(() => "");
+    let (colors, setColors) = React.useState(() => [||]);
 
     React.useEffect(() => {
       let _ =
         Js.Promise.(
           Fetch.fetch(colorsUrl)
-          |> then_(Fetch.Response.text)
-          |> then_(text => setColors(_ => text) |> resolve)
+          |> then_(Fetch.Response.json)
+          |> then_(json =>
+               json
+               ->Js.Json.decodeArray
+               ->Belt.Option.getExn
+               ->Belt.Array.map(Color.decode)
+               ->resolve
+             )
+          |> then_(colors => {setColors(_ => colors) |> resolve})
         );
 
       Some(() => ());
@@ -20,7 +27,21 @@ module App = {
 
     <div>
       <h1> "Colors"->React.string </h1>
-      <p> colors->React.string </p>
+      {colors
+       |> Array.map(({name, hex}: Color.t) =>
+            <div style={ReactDOM.Style.make(~display="flex", ())}>
+              <div
+                style={ReactDOM.Style.make(
+                  ~backgroundColor=hex,
+                  ~width="400px",
+                  ~height="50px",
+                  (),
+                )}
+              />
+              <p> {name |> React.string} </p>
+            </div>
+          )
+       |> React.array}
     </div>;
   };
 };
