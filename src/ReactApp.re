@@ -14,10 +14,10 @@ module App = {
           |> then_(Fetch.Response.json)
           |> then_(json =>
                json
-               ->Js.Json.decodeArray
-               ->Belt.Option.getExn
-               ->Belt.Array.map(Color.decode)
-               ->resolve
+               |> Js.Json.decodeArray
+               |> Option.getOrThrow
+               |> Array.map(Color.decode)
+               |> resolve
              )
           |> then_(colors => {setColors(_ => colors) |> resolve})
         );
