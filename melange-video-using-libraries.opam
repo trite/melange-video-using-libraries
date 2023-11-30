@@ -20,5 +20,6 @@ depends: [
   "ocamlformat" {>= "0.26.1"}
   "melange-fetch" {>= "0.1.0"}
   "melange-json" {>= "1.0.0"}
+  "relude" {>= "2.0.0"}
 ]
 dev-repo: "git+https://github.com/your/project.git"
