@@ -28,7 +28,8 @@ module App = {
     <div>
       <h1> "Colors"->React.string </h1>
       {colors
-       |> Array.map(({name, hex}: Color.t) =>
+       |> Array.map(
+            ({name, hex, hsl: {hue, saturation, lightness}, _}: Color.t) =>
             <div style={ReactDOM.Style.make(~display="flex", ())}>
               <div
                 style={ReactDOM.Style.make(
@@ -38,7 +39,10 @@ module App = {
                   (),
                 )}
               />
-              <p> {name |> React.string} </p>
+              <p>
+                {{j|name: $name, H: $hue, S: $saturation, L: $lightness|j}
+                 |> React.string}
+              </p>
             </div>
           )
        |> React.array}
