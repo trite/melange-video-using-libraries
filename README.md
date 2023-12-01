@@ -1,3 +1,12 @@
+# Example project of using libraries with Melange
+Created for the following video: https://www.youtube.com/watch?v=AaoFVekZANY
+
+# Relude opam pin command
+This needs to be run manually once per project init on any new machine:
+```
+opam pin add -y relude.dev "https://github.com/reazen/relude.git#v2"
+```
+
 # melange-video-using-libraries
 
 A simple project template using [Melange](https://github.com/melange-re/melange)
